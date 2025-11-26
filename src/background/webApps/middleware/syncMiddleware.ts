@@ -14,11 +14,13 @@ export const createBackgroundSyncMiddleware = (): Middleware<{}, RootState> => {
       // Send the updated state to the content script
       chrome.tabs
         .sendMessage(tabId, {
-          type: "STORE_UPDATE",
+          type: "STORE_SYNC",
           state: storeContent,
         })
         .then(() => {
-          console.log(`Store update sent to content script for tab ${tabId}`);
+          console.log(
+            `BackgroundSyncMiddleware: Store update sent to content script for tab ${tabId}`
+          );
         })
         .catch((error) => {
           console.error(
@@ -31,4 +33,3 @@ export const createBackgroundSyncMiddleware = (): Middleware<{}, RootState> => {
     return result;
   };
 };
-

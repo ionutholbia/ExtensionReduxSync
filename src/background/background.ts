@@ -130,17 +130,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true; // Keep channel open for async response
   }
 
-  if (message.type === "googleIconPosition") {
-    console.log("Received Google icon position:", message.position);
-    console.log("From tab:", sender.tab?.url);
-
-    // You can dispatch to background store here if needed
-    // store.dispatch(someAction(message.position));
-
-    sendResponse({ success: true, message: "Icon position received!" });
-    return true;
-  }
-
   if (message.type === "STORE_UPDATE") {
     const tabId = sender.tab?.id;
     if (!tabId) {

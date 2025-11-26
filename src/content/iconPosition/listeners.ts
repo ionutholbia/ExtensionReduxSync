@@ -12,16 +12,12 @@ iconPositionListenerMiddleware.startListening({
     const position: IconPosition = action.payload;
 
     try {
-      // Send message to background with the icon position
-      await chrome.runtime.sendMessage({
-        type: "googleIconPosition",
-        position: position,
-        timestamp: Date.now(),
-      });
-
-      console.log("Google icon position sent to background:", position);
+      console.log("Listener: Google icon position update in store.", position);
     } catch (error) {
-      console.error("Error sending icon position to background:", error);
+      console.error(
+        "Listener: Error sending icon position to background:",
+        error
+      );
     }
   },
 });

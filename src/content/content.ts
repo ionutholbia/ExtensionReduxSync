@@ -88,63 +88,19 @@ async function sendHelloToServiceWorker() {
       config: config, // Send config from store
     });
 
-    console.log("Service worker responded:", response);
+    console.log("Content initialization:", response);
 
     // Save config to store if received from background
     if (response?.config) {
       store.dispatch(setConfig(response.config));
-      console.log("Config saved to store:", response.config);
     }
-
-    // Show visual indicator
-    showIndicator("Content Script Active - Hello sent!");
   } catch (error) {
     console.error("Error sending message to service worker:", error);
-    showIndicator("Content Script Active - Connection failed");
   }
-}
-
-// Show visual indicator
-function showIndicator(message: string) {
-  const indicator = document.createElement("div");
-  indicator.id = "content-script-indicator";
-  indicator.style.cssText = `
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: #4CAF50;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-family: Arial, sans-serif;
-    z-index: 10000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    display: none;
-  `;
-  indicator.textContent = message;
-  document.body.appendChild(indicator);
-
-  // Show indicator briefly
-  indicator.style.display = "block";
-  setTimeout(() => {
-    indicator.style.display = "none";
-    setTimeout(() => {
-      indicator.remove();
-    }, 300);
-  }, 2000);
 }
 
 // Initialize when DOM is ready
 function initialize() {
-  // Save Google icon position
-  saveGoogleIconPosition();
-
-  // Try again after a short delay in case icon loads later
-  setTimeout(() => {
-    saveGoogleIconPosition();
-  }, 1000);
-
   // Send hello message
   sendHelloToServiceWorker();
 }

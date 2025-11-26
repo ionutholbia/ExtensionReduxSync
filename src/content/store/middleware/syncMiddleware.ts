@@ -33,7 +33,10 @@ export const createSyncMiddleware = (): Middleware<{}, ContentRootState> => {
           console.error("Error sending store update to background:", error);
         });
 
-      console.log("Sending store update to background:", action);
+      console.log(
+        "ContentSyncMiddleware: Sending store update to background:",
+        action
+      );
 
       // Don't apply the action locally - wait for background to send it back
       return action;
