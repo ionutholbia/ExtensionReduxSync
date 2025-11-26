@@ -1,0 +1,22 @@
+{
+  "name": "content-script-extension",
+  "version": "1.0.0",
+  "description": "Chrome/Edge extension with service worker injection",
+  "scripts": {
+    "build": "npm run build:types && npm run build:bundle && npm run build:content && npm run copy",
+    "build:types": "tsc --noEmit",
+    "build:bundle": "esbuild src/background/background.ts --bundle --format=esm --outfile=dist/background/background.js --external:chrome --platform=browser",
+    "build:content": "esbuild src/content/content.ts --bundle --format=iife --outfile=dist/content/content.js --platform=browser --external:chrome --target=es2020 --define:process.env.NODE_ENV='\"production\"'",
+    "copy": "cp manifest.json dist/manifest.json && cp -r src/icons dist/icons && rm -f dist/content/content.ts",
+    "watch": "npm run build:bundle -- --watch",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "esbuild": "^0.27.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.11.0"
+  }
+}

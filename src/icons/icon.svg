@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Redux logo inspired design -->
+  <defs>
+    <linearGradient id="reduxGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#764ABC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5A2C8A;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="url(#reduxGradient)" stroke="#5A2C8A" stroke-width="2"/>
+  
+  <!-- Redux symbol - simplified version -->
+  <path d="M 40 50 L 64 40 L 88 50 L 88 70 L 64 80 L 40 70 Z" fill="#FFFFFF" opacity="0.9"/>
+  <path d="M 45 55 L 64 48 L 83 55 L 83 65 L 64 72 L 45 65 Z" fill="#764ABC"/>
+  
+  <!-- Sync arrows -->
+  <path d="M 30 64 L 25 59 M 30 64 L 25 69" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 98 64 L 103 59 M 98 64 L 103 69" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+</svg>
+
