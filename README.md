@@ -1,6 +1,12 @@
-# Chrome/Edge Extension - Content Script
+# ReduxSync - Chrome/Edge Extension
 
-A Chrome/Edge extension that uses a service worker to programmatically inject content scripts based on a hardcoded JSON configuration.
+**Proof of Concept (POC)** for synchronizing Redux stores between content scripts and background scripts in a Chrome/Edge extension.
+
+This extension demonstrates a master-slave pattern where:
+- **Background script** maintains the source of truth for all Redux store state
+- **Content scripts** have local Redux stores that are synchronized with the background store
+- Content scripts cannot directly update their stores - all updates must go through the background script
+- The background script mirrors the content store state and automatically syncs updates back to content scripts
 
 ## Setup
 
@@ -32,25 +38,36 @@ This will compile TypeScript files and copy necessary files to the `dist` direct
 
 ## Features
 
-- Service worker programmatically injects content scripts (not via manifest)
-- Configuration defined in `src/config.ts` (hardcoded JSON-like structure)
-- Content script communicates with service worker and sends "hello" message
-- TypeScript source files in `src` directory
-- Visual indicator when content script is active
+- **Redux Store Synchronization**: Master-slave pattern with background script as source of truth
+- **Content Script Store**: Local Redux store in content scripts that syncs with background
+- **Background Script Store**: Centralized Redux store that mirrors all content script stores
+- **Middleware-based Sync**: RTK middleware blocks direct content store updates and routes through background
+- **Automatic Updates**: Background automatically syncs store updates back to content scripts
+- **Service worker injection**: Programmatically injects content scripts based on configuration
+- **TypeScript**: Fully typed with TypeScript and Redux Toolkit
+- **Feature-based structure**: Organized by features (config, iconPosition, webApps, tabs)
 
 ## Project Structure
 
 ```
 ├── src/
 │   ├── background/
-│   │   ├── background.ts    # Service worker that injects content scripts
-│   │   └── config.ts        # Configuration for script injection
-│   └── content/
-│       └── content.ts       # Content script that runs on web pages
-├── dist/                    # Compiled output (generated)
-├── manifest.json            # Extension manifest
-├── tsconfig.json            # TypeScript configuration
-└── package.json             # Dependencies and build scripts
+│   │   ├── background.ts         # Service worker that injects content scripts
+│   │   ├── config.ts             # Configuration for script injection
+│   │   ├── store/                # Background Redux store
+│   │   ├── tabs/                 # Tab management feature
+│   │   └── webApps/              # WebApp feature with store mirroring
+│   ├── content/
+│   │   ├── content.ts            # Content script entry point
+│   │   ├── config/               # Config feature slice
+│   │   ├── iconPosition/         # Icon position feature slice
+│   │   └── store/                # Content Redux store with sync middleware
+│   └── shared/
+│       └── middleware/           # Shared logger middleware
+├── dist/                         # Compiled output (generated)
+├── manifest.json                 # Extension manifest
+├── tsconfig.json                 # TypeScript configuration
+└── package.json                  # Dependencies and build scripts
 ```
 
 ## Customization
